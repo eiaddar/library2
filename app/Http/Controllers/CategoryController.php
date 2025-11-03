@@ -12,7 +12,8 @@ class CategoryController extends Controller
      */
     public function index()
     {
-        //
+        $categories = Category::all();
+        return view("admin/category/List", compact("categories"));
     }
 
     /**
@@ -20,7 +21,8 @@ class CategoryController extends Controller
      */
     public function create()
     {
-        //
+        return view("admin/category/add");
+        
     }
 
     /**
@@ -28,7 +30,19 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $validation = $request->validate([
+            "name"=> "required|min:5|max:55",
+            "order"=> "required|numeric|nullable",
+        ]);
+        //$category = Category::create($request->all());
+        $category = new Category();
+        $category->name = $request->name;
+        $category->order = $request->order;
+        $category->is_active= $request->is_active;
+
+        $category->save();
+
+        return redirect()->route("admin-category")->with("success","");
     }
 
     /**
