@@ -14,9 +14,15 @@ return new class extends Migration
         Schema::create('authors', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->text('resume');
-            $table->string('image_url');
+            $table->text('biography')->nullable();
+            $table->string('nationality')->nullable();
+            $table->date('birth_date')->nullable();
+            $table->date('death_date')->nullable();
+            $table->string('email')->nullable();
+            $table->string('website')->nullable();
+            $table->string('photo')->nullable();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 
