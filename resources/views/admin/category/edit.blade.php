@@ -39,26 +39,21 @@
         </div>
         @endif
         <!--begin::Form-->
-        <form action="{{ route('add-category') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('update-category') }}" method="post">
             @csrf
             <!--begin::Body-->
             <div class="card-body">
                 <div class="row mb-3">
-                    <label for="Image_url" class="col-sm-2 col-form-label">Image</label>
-                    <div class="col-sm-10">
-                        <input type="file" name="Image_url"  class="form-control" id="Image_url" value="{{ old('image_url') }}">
-                    </div>
-                </div>
-                <div class="row mb-3">
                     <label for="name" class="col-sm-2 col-form-label">Name</label>
                     <div class="col-sm-10">
-                        <input type="text" name="name" required class="form-control" id="name" value="{{ old('name') }}">
+                        <input type="hidden" name="id" required class="form-control" id="id" value="{{ $category->id }}">
+                        <input type="text" name="name" required class="form-control" id="name" value="{{ $category->name }}">
                     </div>
                 </div>
                 <div class="row mb-3">
                     <label for="order" class="col-sm-2 col-form-label">order</label>
                     <div class="col-sm-10">
-                        <input type="number" min="1" value="{{ old('order') }}" name="order" class="form-control" id="order">
+                        <input type="number" min="1" value="{{ $category->order}}" name="order" class="form-control" id="order">
                     </div>
                 </div>
                 <fieldset class="row mb-3">
@@ -79,7 +74,7 @@
             <!--begin::Footer-->
             <div class="card-footer">
                 <button type="submit" class="btn btn-success">Save</button>
-                <button type="submit" class="btn float-end">Cancel</button>
+                <button type="cancel" class="btn float-end">Cancel</button>
             </div>
             <!--end::Footer-->
         </form>
