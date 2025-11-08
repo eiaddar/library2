@@ -14,78 +14,126 @@
     </div>
 </div>
 <!--end::Row-->
-<div class="row">
+
+@if(session('success'))
+    <div class="alert alert-success alert-dismissible fade show" role="alert">
+        {{ session('success') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+@if(session('error'))
+    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+        {{ session('error') }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+    </div>
+@endif
+
+<div class="row mb-3">
     <div class="col-lg-2">
-        <a href="{{ route('add-category') }}" class="btn btn-primary">Add Category</a>
+        <a href="{{ route('add-category') }}" class="btn btn-primary">
+            <i class="fas fa-plus"></i> Add Category
+        </a>
     </div>
 </div>
+
 <div class="col-lg-12">
-
-    <table class="table table-striped">
-        <th>id</th>
-        <th>Name</th>
-        <th>Order</th>
-        <th>Is Active</th>
-        <th>image</th>
-        <th class="">Actions</th>
-        <tbody>
-            @foreach ($categories as $cat)
-            <tr>
-                <td>{{ $cat->id }}</td>
-                <td>{{ $cat->name }}</td>
-                <td>{{ $cat->order }}</td>
-                <td><span class="badge bg-{{$cat->is_active==1?"success":"danger"}}">{{ $cat->is_active==1?"Active":"Draft" }}</span></td>
-                <td><img src="{{ asset($cat->image_url) != (env('APP_URL')."/") ? asset($cat->image_url):asset("asset/images/book1.avif")}}" width="150px"/></td>
-                
-                <td>
-                    <a href="/admin/category/edit/{{ $cat->id }}" class="btn btn-warning">Edit</a>
-                    <a href="#" data-id="{{$cat->id}}" class="btn btn-danger delete-cat">Delete</a>
-
-                </td>
-
-            </tr>
-            @endforeach
-
-        </tbody>
-    </table>
+    <div class="card">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Name</th>
+                            <th>Order</th>
+                            <th>Status</th>
+                            <th>Image</th>
+                            <th class="text-end">Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @forelse ($categories as $cat)
+                        <tr>
+                            <td>{{ $cat->id }}</td>
+                            <td>{{ $cat->name }}</td>
+                            <td>{{ $cat->order }}</td>
+                            <td>
+                                <span class="badge bg-{{ $cat->is_active ? 'success' : 'danger' }}">
+                                    {{ $cat->is_active ? 'Active' : 'Inactive' }}
+                                </span>
+                            </td>
+                            <td>
+                                @if($cat->image_url && Storage::disk('public')->exists($cat->image_url))
+                                    <img src="{{ asset('storage/' . $cat->image_url) }}" alt="{{ $cat->name }}" class="img-thumbnail" width="80">
+                                @else
+                                    <img src="{{ asset('asset/images/book1.avif') }}" alt="Default Image" class="img-thumbnail" width="80">
+                                @endif
+                            </td>
+                            <td class="text-end">
+                                <div class="btn-group" role="group">
+                                    <a href="{{ route('edit-category', $cat->id) }}" class="btn btn-warning btn-sm" title="Edit">
+                                        Edit
+                                        <i class="fas fa-edit"></i>
+                                    </a>
+                                        <button type="submit" class="btn btn-danger btn-sm delete-category"
+                                                data-id="{{ $cat->id }}"
+                                                data-name="{{ $cat->name }}"
+                                                title="Delete">
+                                                Delete
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                </div>
+                            </td>
+                        </tr>
+                        @empty
+                        <tr>
+                            <td colspan="6" class="text-center">No categories found.</td>
+                        </tr>
+                        @endforelse
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
 </div>
+
+<form id="deleteForm" action="" method="POST" class="d-none">
+    @csrf
+    @method('DELETE')
+</form>
+
+@push('scripts')
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
-    // import Swal from 'sweetalert2';
     document.addEventListener('DOMContentLoaded', function() {
-        //Swal.fire("SweetAlert2 is working!");
-        document.querySelectorAll('.delete-cat').forEach(function(btn) {
-            btn.addEventListener('click', function() {
-                console.log(btn);
-                let id= btn.getAttribute('data-id'); 
-                console.log(id);
-                // You can access the data-id attribute here if needed:
-                // var catId = this.getAttribute('data-id');
+        // Handle delete button click
+        document.querySelectorAll('.delete-category').forEach(button => {
+            button.addEventListener('click', function() {
+                const categoryId = this.getAttribute('data-id');
+                const categoryName = this.getAttribute('data-name');
+                const form = document.getElementById('deleteForm');
+
                 Swal.fire({
-                    title: "Are you sure?",
-                    text: "You won't be able to revert this!",
-                    icon: "warning",
+                    title: 'Are you sure?',
+                    text: `You are about to delete "${categoryName}". This action cannot be undone!`,
+                    icon: 'warning',
                     showCancelButton: true,
-                    confirmButtonColor: "#3085d6",
-                    cancelButtonColor: "#d33",
-                    confirmButtonText: "Yes, delete it!"
+                    confirmButtonColor: '#3085d6',
+                    cancelButtonColor: '#d33',
+                    confirmButtonText: 'Yes, delete it!',
+                    reverseButtons: true
                 }).then((result) => {
                     if (result.isConfirmed) {
-                       
-                        window.location.href= "{{ env('APP_URL') }}"+'/admin/category/delete/'+id;
+                        // Set the form action and submit
+                        form.action = `/admin/category/delete/${categoryId}`;
+                        form.submit();
                     }
                 });
             });
         });
     });
-
-    function confirmDelete(id) {
-
-        // if(confirm("are you sure you want to delete?")==true){
-        //     window.location.href= "{{ env('APP_URL') }}"+'/admin/category/delete/'+id;
-        // }
-
-
-    }
 </script>
+@endpush
+
 @endsection

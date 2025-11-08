@@ -39,14 +39,14 @@
         </div>
         @endif
         <!--begin::Form-->
-        <form action="{{ route('add-category') }}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('store-category') }}" method="post" enctype="multipart/form-data">
             @csrf
             <!--begin::Body-->
             <div class="card-body">
                 <div class="row mb-3">
                     <label for="Image_url" class="col-sm-2 col-form-label">Image</label>
                     <div class="col-sm-10">
-                        <input type="file" name="Image_url"  class="form-control" id="Image_url" value="{{ old('image_url') }}">
+                        <input type="file" name="image_url" class="form-control" id="image_url" value="{{ old('image_url') }}">
                     </div>
                 </div>
                 <div class="row mb-3">
