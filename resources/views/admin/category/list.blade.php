@@ -59,9 +59,16 @@
                             <td>{{ $cat->name }}</td>
                             <td>{{ $cat->order }}</td>
                             <td>
-                                <span class="badge bg-{{ $cat->is_active ? 'success' : 'danger' }}">
-                                    {{ $cat->is_active ? 'Active' : 'Inactive' }}
-                                </span>
+                                <div class="form-check form-switch d-inline-block">
+                                    <input class="form-check-input status-toggle" type="checkbox"
+                                           data-id="{{ $cat->id }}"
+                                           {{ $cat->is_active ? 'checked' : '' }}>
+                                    <label class="form-check-label ms-2">
+                                        <span class="badge bg-{{ $cat->is_active ? 'success' : 'danger' }}">
+                                            {{ $cat->is_active ? 'Active' : 'Inactive' }}
+                                        </span>
+                                    </label>
+                                </div>
                             </td>
                             <td>
                                 @if($cat->image_url && Storage::disk('public')->exists($cat->image_url))
@@ -107,6 +114,56 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script>
     document.addEventListener('DOMContentLoaded', function() {
+        // Handle status toggle
+        document.querySelectorAll('.status-toggle').forEach(toggle => {
+            toggle.addEventListener('change', function() {
+                const categoryId = this.getAttribute('data-id');
+                const isActive = this.checked;
+                const statusBadge = this.closest('tr').querySelector('.badge');
+                const button = this;
+
+                // Show loading state
+                button.disabled = true;
+
+                // Send AJAX request
+                fetch(`/admin/category/toggle-status/${categoryId}`, {
+                    method: 'GET',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    }
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        // Update UI
+                        statusBadge.className = `badge bg-${data.is_active ? 'success' : 'danger'}`;
+                        statusBadge.textContent = data.is_active ? 'Active' : 'Inactive';
+
+                        // Show success message
+                        Swal.fire({
+                            title: 'Success!',
+                            text: data.message,
+                            icon: 'success',
+                            timer: 1000,
+                            showConfirmButton: false
+                        });
+                    } else {
+                        // Revert toggle if there was an error
+                        button.checked = !isActive;
+                        Swal.fire('Error', data.message, 'error');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    button.checked = !isActive;
+                    Swal.fire('Error', 'An error occurred while updating the status', 'error');
+                })
+                .finally(() => {
+                    button.disabled = false;
+                });
+            });
+        });
+
         // Handle delete button click
         document.querySelectorAll('.delete-category').forEach(button => {
             button.addEventListener('click', function() {

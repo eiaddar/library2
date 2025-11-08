@@ -15,6 +15,9 @@ Route::get('/admin/category/add', [CategoryController::class,'create'])->name('a
 Route::post('/admin/category/add', [CategoryController::class,'store'])->name('store-category');
 Route::get('/admin/category/edit/{Id}', [CategoryController::class,'edit'])->name('edit-category');
 Route::post('/admin/category/edit', [CategoryController::class,'update'])->name('update-category');
+// Toggle category status
+Route::get('/admin/category/toggle-status/{id}', [CategoryController::class,'toggleStatus'])->name('toggle-category-status');
+
 // Delete category (using DELETE method for RESTful practice)
 Route::delete('/admin/category/delete/{id}', [CategoryController::class,'destroy'])->name('destroy-category');
 // Keep the GET route for backward compatibility

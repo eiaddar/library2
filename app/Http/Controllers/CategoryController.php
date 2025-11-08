@@ -171,6 +171,32 @@ class CategoryController extends Controller
         //
     }
 
+    /**
+     * Toggle the status of a category.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\JsonResponse
+     */
+    public function toggleStatus($id)
+    {
+        try {
+            $category = Category::findOrFail($id);
+            $category->is_active = !$category->is_active;
+            $category->save();
+
+            return response()->json([
+                'success' => true,
+                'message' => 'Status updated successfully',
+                'is_active' => $category->is_active
+            ]);
+        } catch (\Exception $e) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Error updating status: ' . $e->getMessage()
+            ], 500);
+        }
+    }
+
     public function getBooksByCategory($id)
     {
         $category = Category::with('books')->findOrFail($id);
