@@ -56,7 +56,7 @@
                 <div class="card-body">
                     <h5 class="card-title">{{$cat->name}}</h5>
                     <p class="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                    <a href="{{env('APP_URL')."/category"."/".$cat->id}}" class="btn btn-primary">Go somewhere</a>
+                    <a href="{{env('APP_URL')."/category"."/".$cat->id}}" class="btn btn-primary">Explore {{ $cat->name }} Books</a>
                 </div>
             </div>
         </div>

@@ -242,8 +242,11 @@
               <!--end::Menu Body-->
               <!--begin::Menu Footer-->
               <li class="user-footer">
-                <a href="#" class="btn btn-default btn-flat">Profile</a>
-                <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
+                <button href="#" class="btn btn-default btn-flat">Profile</a>
+                <form action="/logout" method="post">
+                    @csrf
+                    <button class="btn btn-default btn-flat float-end">Sign out</button>
+                </form>
               </li>
               <!--end::Menu Footer-->
             </ul>
@@ -341,10 +344,10 @@
   <!--begin::Script-->
   <!-- ApexCharts -->
   <script src="{{ asset('js/lib/apexcharts/apexcharts.min.js') }}"></script>
-  
+
   <!-- jsvectormap -->
   <script src="{{ asset('js/lib/jsvectormap/jsvectormap.min.js') }}"></script>
-  
+
   <!--begin::Third Party Plugin(OverlayScrollbars)-->
   <script
     src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
