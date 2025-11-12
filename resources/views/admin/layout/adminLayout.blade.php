@@ -74,8 +74,9 @@
               <i class="bi bi-list"></i>
             </a>
           </li>
-          <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Home</a></li>
-          <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Contact</a></li>
+          <li class="nav-item d-none d-md-block"></span><a href="#" class="nav-link">Home</a></li>
+          <li class="nav-item d-none d-md-block"></span><a href="#" class="nav-link">Contact</a></li>
+          <li class="nav-item d-none d-md-block"></span><a href="#" class="nav-link">users</a></li>
         </ul>
         <!--end::Start Navbar Links-->
         <!--begin::End Navbar Links-->
@@ -212,7 +213,7 @@
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
               <img
                 src="{{asset('./assets/img/user2-160x160.jpg')}}"
-                class="user-image rounded-circle shadow"
+                class="shadow user-image rounded-circle"
                 alt="User Image" />
               <span class="d-none d-md-inline">Alexander Pierce</span>
             </a>
@@ -221,7 +222,7 @@
               <li class="user-header text-bg-primary">
                 <img
                   src="{{asset('./assets/img/user2-160x160.jpg')}}"
-                  class="rounded-circle shadow"
+                  class="shadow rounded-circle"
                   alt="User Image" />
                 <p>
                   Alexander Pierce - Web Developer
@@ -233,9 +234,9 @@
               <li class="user-body">
                 <!--begin::Row-->
                 <div class="row">
-                  <div class="col-4 text-center"><a href="#">Followers</a></div>
-                  <div class="col-4 text-center"><a href="#">Sales</a></div>
-                  <div class="col-4 text-center"><a href="#">Friends</a></div>
+                  <div class="text-center col-4"><a href="#">Followers</a></div>
+                  <div class="text-center col-4"><a href="#">Sales</a></div>
+                  <div class="text-center col-4"><a href="#">Friends</a></div>
                 </div>
                 <!--end::Row-->
               </li>
@@ -259,7 +260,7 @@
     </nav>
     <!--end::Header-->
     <!--begin::Sidebar-->
-    <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+    <aside class="shadow app-sidebar bg-body-secondary" data-bs-theme="dark">
       <!--begin::Sidebar Brand-->
       <div class="sidebar-brand">
         <!--begin::Brand Link-->
@@ -268,7 +269,7 @@
           <img
             src="{{asset('/assets/img/AdminLTELogo.png')}}"
             alt="AdminLTE Logo"
-            class="brand-image opacity-75 shadow" />
+            class="shadow opacity-75 brand-image" />
           <!--end::Brand Image-->
           <!--begin::Brand Text-->
           <span class="brand-text fw-light">AdminLTE 4</span>
@@ -290,14 +291,20 @@
             id="navigation">
             <li class="nav-item">
               <a href="{{route('admin-dashboard')}}" class="nav-link active">
-                <i class="nav-icon bi bi-circle"></i>
-                <p>Dashboard v1</p>
+                <i class="nav-icon fa fa-globe"></i>
+                <p>Dashboard</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{route('admin-category')}}" class="nav-link active">
-                <i class="nav-icon bi bi-list"></i>
+                <i class="nav-icon fa fa-list"></i>
                 <p>Category</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('admin-user')}}" class="nav-link active">
+                <i class="nav-icon fa fa-users"></i>
+                <p>Users</p>
               </a>
             </li>
 

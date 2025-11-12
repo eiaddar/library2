@@ -24,9 +24,21 @@ class AuthenticatedSessionController extends Controller
      */
     public function store(LoginRequest $request): RedirectResponse
     {
-        $request->authenticate();
-
+        $user = $request->authenticate();
         $request->session()->regenerate();
+
+
+        $user = Auth::user();
+        // Store user information in the session
+        $request->session()->put([
+            'user_id' => $user->id,
+            'user_name' => $user->name,
+            'user_email' => $user->email,
+            'user_roles' => $user->roles->pluck('name')->toArray(),
+            'user_profile_image' => $user->profile_image ? 'storage/profile_images/' . $user->profile_image : 'asset/images/user.png',
+            'user_status' => $user->is_active,
+            'last_login' => now()->toDateTimeString()
+        ]);
 
         return redirect()->intended(route('admin-dashboard', absolute: false));
     }

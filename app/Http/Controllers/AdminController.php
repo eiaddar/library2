@@ -8,6 +8,7 @@ class AdminController extends Controller
 {
     public function index()
     {
+        // dd(session());
         if (auth()->user()->hasRole("admin")) {
             return view("admin/layout/adminLayout");
         } else {
