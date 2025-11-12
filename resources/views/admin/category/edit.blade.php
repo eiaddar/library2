@@ -65,7 +65,7 @@
                             <div class="mt-3">
                                 <p class="mb-2">Current Image:</p>
                                 <div class="d-flex align-items-center">
-                                    <img src="{{ asset('storage/' . $category->image_url) }}" alt="Current Image" width="150" class="img-thumbnail me-3">
+                                    <img src="{{ asset('storage/' . $category->image_url) }}" alt="Current Image" width="150" class="img-thumbnail rounded me-3">
                                     <div class="form-check">
                                         <input class="form-check-input" type="checkbox" name="remove_image" id="removeImage" value="1">
                                         <label class="form-check-label text-danger" for="removeImage">

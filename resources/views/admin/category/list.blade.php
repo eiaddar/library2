@@ -62,6 +62,7 @@
                                 <div class="form-check form-switch d-inline-block">
                                     <input class="form-check-input status-toggle" type="checkbox"
                                            data-id="{{ $cat->id }}"
+                                           data-name ={{ $cat->name }}
                                            {{ $cat->is_active ? 'checked' : '' }}>
                                     <label class="form-check-label ms-2">
                                         <span class="badge bg-{{ $cat->is_active ? 'success' : 'danger' }}">
@@ -117,6 +118,7 @@
         // Handle status toggle
         document.querySelectorAll('.status-toggle').forEach(toggle => {
             toggle.addEventListener('change', function() {
+                const categoryName = this.getAttribute('data-name');
                 const categoryId = this.getAttribute('data-id');
                 const isActive = this.checked;
                 const statusBadge = this.closest('tr').querySelector('.badge');
@@ -142,7 +144,7 @@
                         // Show success message
                         Swal.fire({
                             title: 'Success!',
-                            text: data.message,
+                            text: data.message +"  for "+ categoryName,
                             icon: 'success',
                             timer: 1000,
                             showConfirmButton: false

@@ -4,7 +4,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>AdminLTE v4 | Dashboard</title>
+  <title>Admin Dashboard</title>
   <!--begin::Accessibility Meta Tags-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="color-scheme" content="light dark" />
@@ -99,7 +99,7 @@
                 <div class="d-flex">
                   <div class="flex-shrink-0">
                     <img
-                      src="{{asset('./assets/img/user1-128x128.jpg')}}"
+                      src="{{asset('./asset/'.session()->get('image'))}}"
                       alt="User Avatar"
                       class="img-size-50 rounded-circle me-3" />
                   </div>
@@ -211,21 +211,21 @@
           <li class="nav-item dropdown user-menu">
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
               <img
-                src="{{asset('./assets/img/user2-160x160.jpg')}}"
+                src="{{asset('./asset/'.session()->get('image'))}}"
                 class="user-image rounded-circle shadow"
                 alt="User Image" />
-              <span class="d-none d-md-inline">Alexander Pierce</span>
+              <span class="d-none d-md-inline">{{session()->get('name')}}</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
               <!--begin::User Image-->
               <li class="user-header text-bg-primary">
                 <img
-                  src="{{asset('./assets/img/user2-160x160.jpg')}}"
+                  src="{{asset('./asset/'.session()->get('image'))}}"
                   class="rounded-circle shadow"
                   alt="User Image" />
                 <p>
-                  Alexander Pierce - Web Developer
-                  <small>Member since Nov. 2023</small>
+                  {{session()->get('name')}}
+                  <small>Member since {{session()->get('created_at')}}</small>
                 </p>
               </li>
               <!--end::User Image-->
@@ -243,7 +243,10 @@
               <!--begin::Menu Footer-->
               <li class="user-footer">
                 <a href="#" class="btn btn-default btn-flat">Profile</a>
-                <a href="#" class="btn btn-default btn-flat float-end">Sign out</a>
+                <form method="post" action="/logout">
+                  @csrf
+                  <button class="btn btn-default btn-flat float-end">Sign out</button>
+                </form>
               </li>
               <!--end::Menu Footer-->
             </ul>
@@ -341,10 +344,10 @@
   <!--begin::Script-->
   <!-- ApexCharts -->
   <script src="{{ asset('js/lib/apexcharts/apexcharts.min.js') }}"></script>
-  
+
   <!-- jsvectormap -->
   <script src="{{ asset('js/lib/jsvectormap/jsvectormap.min.js') }}"></script>
-  
+
   <!--begin::Third Party Plugin(OverlayScrollbars)-->
   <script
     src="https://cdn.jsdelivr.net/npm/overlayscrollbars@2.11.0/browser/overlayscrollbars.browser.es6.min.js"
@@ -399,6 +402,8 @@
         confirmButtonText: 'OK'
       });
     }
+
+    
   </script>
   @stack('scripts')
   <!--end::Script-->
