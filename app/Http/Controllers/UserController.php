@@ -117,7 +117,7 @@ class UserController extends Controller
 
 
         // Sync roles
-        $user->roles()->sync($request->roles);
+        $user->assignRole($request->roles);
 
         return redirect()->route('admin-user')->with('success', 'User updated successfully');
     }
