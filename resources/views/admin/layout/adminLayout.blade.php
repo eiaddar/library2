@@ -4,7 +4,7 @@
 
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Admin Dashboard</title>
+  <title>AdminLTE v4 | Dashboard</title>
   <!--begin::Accessibility Meta Tags-->
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes" />
   <meta name="color-scheme" content="light dark" />
@@ -74,8 +74,9 @@
               <i class="bi bi-list"></i>
             </a>
           </li>
-          <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Home</a></li>
-          <li class="nav-item d-none d-md-block"><a href="#" class="nav-link">Contact</a></li>
+          <li class="nav-item d-none d-md-block"></span><a href="#" class="nav-link">Home</a></li>
+          <li class="nav-item d-none d-md-block"></span><a href="#" class="nav-link">Contact</a></li>
+          <li class="nav-item d-none d-md-block"></span><a href="#" class="nav-link">users</a></li>
         </ul>
         <!--end::Start Navbar Links-->
         <!--begin::End Navbar Links-->
@@ -99,7 +100,7 @@
                 <div class="d-flex">
                   <div class="flex-shrink-0">
                     <img
-                      src="{{asset('./asset/'.session()->get('image'))}}"
+                      src="{{asset('./assets/img/user1-128x128.jpg')}}"
                       alt="User Avatar"
                       class="img-size-50 rounded-circle me-3" />
                   </div>
@@ -211,21 +212,21 @@
           <li class="nav-item dropdown user-menu">
             <a href="#" class="nav-link dropdown-toggle" data-bs-toggle="dropdown">
               <img
-                src="{{asset('./asset/'.session()->get('image'))}}"
-                class="user-image rounded-circle shadow"
+                src="{{asset('./assets/img/user2-160x160.jpg')}}"
+                class="shadow user-image rounded-circle"
                 alt="User Image" />
-              <span class="d-none d-md-inline">{{session()->get('name')}}</span>
+              <span class="d-none d-md-inline">Alexander Pierce</span>
             </a>
             <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-end">
               <!--begin::User Image-->
               <li class="user-header text-bg-primary">
                 <img
-                  src="{{asset('./asset/'.session()->get('image'))}}"
-                  class="rounded-circle shadow"
+                  src="{{asset('./assets/img/user2-160x160.jpg')}}"
+                  class="shadow rounded-circle"
                   alt="User Image" />
                 <p>
-                  {{session()->get('name')}}
-                  <small>Member since {{session()->get('created_at')}}</small>
+                  Alexander Pierce - Web Developer
+                  <small>Member since Nov. 2023</small>
                 </p>
               </li>
               <!--end::User Image-->
@@ -233,19 +234,19 @@
               <li class="user-body">
                 <!--begin::Row-->
                 <div class="row">
-                  <div class="col-4 text-center"><a href="#">Followers</a></div>
-                  <div class="col-4 text-center"><a href="#">Sales</a></div>
-                  <div class="col-4 text-center"><a href="#">Friends</a></div>
+                  <div class="text-center col-4"><a href="#">Followers</a></div>
+                  <div class="text-center col-4"><a href="#">Sales</a></div>
+                  <div class="text-center col-4"><a href="#">Friends</a></div>
                 </div>
                 <!--end::Row-->
               </li>
               <!--end::Menu Body-->
               <!--begin::Menu Footer-->
               <li class="user-footer">
-                <a href="#" class="btn btn-default btn-flat">Profile</a>
-                <form method="post" action="/logout">
-                  @csrf
-                  <button class="btn btn-default btn-flat float-end">Sign out</button>
+                <button href="#" class="btn btn-default btn-flat">Profile</a>
+                <form action="/logout" method="post">
+                    @csrf
+                    <button class="btn btn-default btn-flat float-end">Sign out</button>
                 </form>
               </li>
               <!--end::Menu Footer-->
@@ -259,16 +260,16 @@
     </nav>
     <!--end::Header-->
     <!--begin::Sidebar-->
-    <aside class="app-sidebar bg-body-secondary shadow" data-bs-theme="dark">
+    <aside class="shadow app-sidebar bg-body-secondary" data-bs-theme="dark">
       <!--begin::Sidebar Brand-->
-      <div class="sidebar-brand">
+      <div class="sidebar-brand"> 
         <!--begin::Brand Link-->
-        <a href="./index.html" class="brand-link">
+        <a href="./dashboard" class="brand-link">
           <!--begin::Brand Image-->
           <img
             src="{{asset('/assets/img/AdminLTELogo.png')}}"
             alt="AdminLTE Logo"
-            class="brand-image opacity-75 shadow" />
+            class="shadow opacity-75 brand-image" />
           <!--end::Brand Image-->
           <!--begin::Brand Text-->
           <span class="brand-text fw-light">AdminLTE 4</span>
@@ -290,14 +291,20 @@
             id="navigation">
             <li class="nav-item">
               <a href="{{route('admin-dashboard')}}" class="nav-link active">
-                <i class="nav-icon bi bi-circle"></i>
-                <p>Dashboard v1</p>
+                <i class="nav-icon fa fa-globe"></i>
+                <p>Dashboard</p>
               </a>
             </li>
             <li class="nav-item">
               <a href="{{route('admin-category')}}" class="nav-link active">
-                <i class="nav-icon bi bi-list"></i>
+                <i class="nav-icon fa fa-list"></i>
                 <p>Category</p>
+              </a>
+            </li>
+            <li class="nav-item">
+              <a href="{{route('admin-user')}}" class="nav-link active">
+                <i class="nav-icon fa fa-users"></i>
+                <p>Users</p>
               </a>
             </li>
 
@@ -402,8 +409,6 @@
         confirmButtonText: 'OK'
       });
     }
-
-    
   </script>
   @stack('scripts')
   <!--end::Script-->

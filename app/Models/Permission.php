@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
-class Role extends Model
+class Permission extends Model
 {
     /**
      * The attributes that are mass assignable.
@@ -18,10 +18,10 @@ class Role extends Model
     ];
 
     /**
-     * The users that belong to the role.
+     * The roles that belong to the permission.
      */
-    public function users(): BelongsToMany
+    public function roles(): BelongsToMany
     {
-        return $this->belongsToMany(User::class)->withTimestamps();
+        return $this->belongsToMany(Role::class);
     }
 }
