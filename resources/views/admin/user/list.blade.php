@@ -16,17 +16,17 @@
 <!--end::Row-->
 
 @if(session('success'))
-    <div class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+<div class="alert alert-success alert-dismissible fade show" role="alert">
+    {{ session('success') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 @endif
 
 @if(session('error'))
-    <div class="alert alert-danger alert-dismissible fade show" role="alert">
-        {{ session('error') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
+<div class="alert alert-danger alert-dismissible fade show" role="alert">
+    {{ session('error') }}
+    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+</div>
 @endif
 
 <div class="mb-3 row">
@@ -61,8 +61,8 @@
                             <td>
                                 <div class="form-check form-switch d-inline-block">
                                     <input class="form-check-input status-toggle" type="checkbox"
-                                           data-id="{{ $user->id }}"
-                                           {{ $user->status ? 'checked' : '' }}>
+                                        data-id="{{ $user->id }}"
+                                        {{ $user->status ? 'checked' : '' }}>
                                     <label class="form-check-label ms-2">
                                         <span class="badge bg-{{ $user->status ? 'success' : 'danger' }}">
                                             {{ $user->status ? 'Active' : 'Inactive' }}
@@ -72,24 +72,28 @@
                             </td>
                             <td>
                                 @if($user->profile_image && Storage::disk('public')->exists('profile_images/'.$user->profile_image))
-                                    <img src="{{ asset('storage/profile_images/' . $user->profile_image) }}" alt="{{ $user->name }}" class="img-thumbnail" width="80">
+                                <img src="{{ asset('storage/profile_images/' . $user->profile_image) }}" alt="{{ $user->name }}" class="img-thumbnail" width="80">
                                 @else
-                                    <img src="{{ asset('asset/images/user-icon.png') }}" alt="Default Image" class="img-thumbnail" width="80">
+                                <img src="{{ asset('asset/images/user-icon.png') }}" alt="Default Image" class="img-thumbnail" width="80">
                                 @endif
                             </td>
                             <td class="text-end">
                                 <div class="btn-group" role="group">
+                                    @can( 'update',$user)
                                     <a href="{{ route('edit-user', $user->id) }}" class="btn btn-warning btn-sm" title="Edit">
                                         Edit
                                         <i class="fas fa-edit"></i>
                                     </a>
-                                        <button type="submit" class="btn btn-danger btn-sm delete-user"
-                                                data-id="{{ $user->id }}"
-                                                data-name="{{ $user->name }}"
-                                                title="Delete">
-                                                Delete
-                                            <i class="fas fa-trash"></i>
-                                        </button>
+                                    @endcan
+                                    @can('delete',$user)
+                                    <button type="submit" class="btn btn-danger btn-sm delete-user"
+                                        data-id="{{ $user->id }}"
+                                        data-name="{{ $user->name }}"
+                                        title="Delete">
+                                        Delete
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                    @endcan
                                 </div>
                             </td>
                         </tr>
@@ -127,42 +131,42 @@
 
                 // Send AJAX request
                 fetch(`/admin/user/toggle-status/${userId}`, {
-                    method: 'GET',
-                    headers: {
-                        'Content-Type': 'application/json',
-                    }
-                })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) {
-                    console.log(data);
+                        method: 'GET',
+                        headers: {
+                            'Content-Type': 'application/json',
+                        }
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            console.log(data);
 
-                        // Update UI
-                        statusBadge.className = `badge bg-${data.is_active ? 'success' : 'danger'}`;
-                        statusBadge.textContent = data.is_active ? 'Active' : 'Inactive';
+                            // Update UI
+                            statusBadge.className = `badge bg-${data.is_active ? 'success' : 'danger'}`;
+                            statusBadge.textContent = data.is_active ? 'Active' : 'Inactive';
 
-                        // Show success message
-                        Swal.fire({
-                            title: 'Success!',
-                            text: data.message,
-                            icon: 'success',
-                            timer: 1000,
-                            showConfirmButton: false
-                        });
-                    } else {
-                        // Revert toggle if there was an error
+                            // Show success message
+                            Swal.fire({
+                                title: 'Success!',
+                                text: data.message,
+                                icon: 'success',
+                                timer: 1000,
+                                showConfirmButton: false
+                            });
+                        } else {
+                            // Revert toggle if there was an error
+                            button.checked = !isActive;
+                            Swal.fire('Error', data.message, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
                         button.checked = !isActive;
-                        Swal.fire('Error', data.message, 'error');
-                    }
-                })
-                .catch(error => {
-                    console.error('Error:', error);
-                    button.checked = !isActive;
-                    Swal.fire('Error', 'An error occurred while updating the status', 'error');
-                })
-                .finally(() => {
-                    button.disabled = false;
-                });
+                        Swal.fire('Error', 'An error occurred while updating the status', 'error');
+                    })
+                    .finally(() => {
+                        button.disabled = false;
+                    });
             });
         });
 

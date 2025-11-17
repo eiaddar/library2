@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Permission;
 use App\Models\Role;
 use App\Models\User;
+use DateTime;
 use Illuminate\Http\Request;
 
 class UserController extends Controller
@@ -14,7 +15,9 @@ class UserController extends Controller
      */
     public function index()
     {
-        $this->authorize('viewAny',User::class);
+
+        // dd(User::class);
+        $this->authorize('viewAny', User::class);
         $users = User::all();
         return view('admin.user.list', compact('users'));
     }
@@ -24,9 +27,11 @@ class UserController extends Controller
      */
     public function create()
     {
+        $this->authorize('create');
+
         $roles = Role::all();
         $permissions = Permission::all();
-        return view('admin.user.add', compact('roles','permissions'));
+        return view('admin.user.add', compact('roles', 'permissions'));
     }
 
     /**
@@ -34,6 +39,8 @@ class UserController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create', User::class);
+
         $request->validate([
             'name' => 'required',
             'email' => 'required|email|unique:users',
@@ -86,7 +93,6 @@ class UserController extends Controller
             'password' => 'sometimes',
             'profile_image' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             'roles' => 'required|array',
-            'roles.*' => 'exists:roles,id',
         ]);
 
         if ($request->hasFile('profile_image')) {
@@ -106,6 +112,9 @@ class UserController extends Controller
 
         // Update only the fields we want to change
         $user->save();
+
+        // dd($request->roles)
+
 
         // Sync roles
         $user->roles()->sync($request->roles);
