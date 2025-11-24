@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 class CategoryController extends Controller
 {
     /**
+     *
      * Display a listing of the resource.
      */
     public function index()
@@ -204,4 +205,12 @@ class CategoryController extends Controller
         // dd($category->books);
         return view("category", compact("category"));
     }
+    public function getCategories()
+    {
+        $category = Category::with('books')->get();
+        //  $books = $category->books;
+        // dd($category->books);
+        return response()->json($category,200);
+    }
+
 }
