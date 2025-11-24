@@ -15,16 +15,34 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // Seed users
+        // First, seed permissions and roles
+        $this->call([
+            PermissionSeeder::class,
+        ]);
+
+        // Then create users
+        $superAdmin = User::factory()->create([
+            'id' => 1,
+            'name' => 'Super Admin',
+            'email' => 'eiaddar@gmail.com',
+            'password' => bcrypt('password'), // You should change this in production
+        ]);
+
+        // Seed regular users
         User::factory(10)->create();
 
-        User::factory()->create([
+        // Create test user
+        $testUser = User::factory()->create([
             'name' => 'Test User',
             'email' => 'test@example.com',
         ]);
 
-        // Call all seeders in the correct order
-        // Categories and Authors first (no dependencies)
+        // Assign Super Admin role to the first user
+        if ($superAdmin) {
+            $superAdmin->assignRole('Super Admin');
+        }
+
+        // Call other seeders in the correct order
         $this->call([
             CategorySeeder::class,
             AuthorSeeder::class,

@@ -13,6 +13,7 @@ Route::get('/category/{category_id}', [CategoryController::class,'getBooksByCate
 
 
 Route::prefix('super-management')->middleware('auth')->group(function () {
+	Route::get('/', [AdminController::class, 'index'])->name('admin-dashboard');
 	Route::get('/dashboard', [AdminController::class, 'index'])->name('admin-dashboard');
 	// Category routes
 	Route::get('/category', [CategoryController::class, 'index'])->name('admin-category');
