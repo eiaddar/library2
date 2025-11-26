@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Role;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
 
@@ -12,7 +13,15 @@ class UserPolicy
      */
     public function viewAny(User $user): bool
     {
+<<<<<<< HEAD
         return true;
+=======
+
+        if (auth()->user()->hasPermissionTo('view users'))
+            return true;
+        else
+            return false;
+>>>>>>> f9b6eb56666e6c1762983dd4ea39217985f1215f
     }
 
     /**
@@ -20,7 +29,14 @@ class UserPolicy
      */
     public function view(User $user, User $model): bool
     {
+<<<<<<< HEAD
         return true;
+=======
+        if (auth()->user()->hasPermissionTo('view users'))
+            return true;
+        else
+            return false;
+>>>>>>> f9b6eb56666e6c1762983dd4ea39217985f1215f
     }
 
     /**
@@ -28,7 +44,14 @@ class UserPolicy
      */
     public function create(User $user): bool
     {
+<<<<<<< HEAD
         return true;
+=======
+        if (auth()->user()->hasPermissionTo('create users'))
+            return true;
+        else
+            return false;
+>>>>>>> f9b6eb56666e6c1762983dd4ea39217985f1215f
     }
 
     /**
@@ -36,7 +59,14 @@ class UserPolicy
      */
     public function update(User $user, User $model): bool
     {
+<<<<<<< HEAD
         return true;
+=======
+        if (auth()->user()->hasPermissionTo('edit users'))
+            return true;
+        else
+            return false;
+>>>>>>> f9b6eb56666e6c1762983dd4ea39217985f1215f
     }
 
     /**
@@ -44,7 +74,14 @@ class UserPolicy
      */
     public function delete(User $user, User $model): bool
     {
+<<<<<<< HEAD
         return true;
+=======
+        if (auth()->user()->hasPermissionTo('delete users'))
+            return true;
+        else
+            return false;
+>>>>>>> f9b6eb56666e6c1762983dd4ea39217985f1215f
     }
 
     /**
@@ -52,7 +89,14 @@ class UserPolicy
      */
     public function restore(User $user, User $model): bool
     {
+<<<<<<< HEAD
         return true;
+=======
+        if (auth()->user()->hasRole('super admin'))
+            return true;
+        else
+            return false;
+>>>>>>> f9b6eb56666e6c1762983dd4ea39217985f1215f
     }
 
     /**
@@ -60,6 +104,13 @@ class UserPolicy
      */
     public function forceDelete(User $user, User $model): bool
     {
+<<<<<<< HEAD
         return true;
+=======
+        if (auth()->user()->hasRole('super admin'))
+            return true;
+        else
+            return false;
+>>>>>>> f9b6eb56666e6c1762983dd4ea39217985f1215f
     }
 }

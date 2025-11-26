@@ -14,6 +14,7 @@ class CategoryController extends Controller
      */
     public function index()
     {
+        $this->authorize('view categories');
         $categories = Category::all();
         return view("admin/category/list", compact("categories"));
     }
@@ -23,6 +24,7 @@ class CategoryController extends Controller
      */
     public function create()
     {
+        $this->authorize('create categories');
         return view("admin/category/add");
     }
 
@@ -31,6 +33,7 @@ class CategoryController extends Controller
      */
     public function store(Request $request)
     {
+        $this->authorize('create categories');
         $validation = $request->validate([
             "name" => "required|min:5|max:55",
             "order" => "required|numeric|nullable",
@@ -70,6 +73,7 @@ class CategoryController extends Controller
      */
     public function show(string $id)
     {
+
         $category = Category::find($id);
         return view("admin/category/show", compact('category'));
     }
@@ -82,6 +86,7 @@ class CategoryController extends Controller
      */
     public function edit($id)
     {
+        $this->authorize('edit categories');
         $category = Category::findOrFail($id);
         return view("admin/category/edit", compact('category'));
     }
@@ -91,6 +96,7 @@ class CategoryController extends Controller
      */
     public function update(Request $request)
     {
+        $this->authorize('edit categories');
         // Validate the request
         $validated = $request->validate([
             "id" => "required|exists:categories,id",
@@ -150,6 +156,7 @@ class CategoryController extends Controller
      */
     public function destroy(string $id)
     {
+        $this->authorize('delete categories');
         try {
             $category = Category::findOrFail($id);
 
@@ -180,6 +187,7 @@ class CategoryController extends Controller
      */
     public function toggleStatus($id)
     {
+        $this->authorize('edit categories');
         try {
             $category = Category::findOrFail($id);
             $category->is_active = !$category->is_active;
@@ -200,6 +208,7 @@ class CategoryController extends Controller
 
     public function getBooksByCategory($id)
     {
+        $this->authorize('view categories');
         $category = Category::with('books')->findOrFail($id);
         //  $books = $category->books;
         // dd($category->books);
