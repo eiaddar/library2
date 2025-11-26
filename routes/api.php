@@ -13,8 +13,8 @@ Route::get('/user', function (Request $request) {
 //Route::get('login', [UserController::class, 'login']);
 
 // Public authentication routes
-Route::post('register', [AuthController::class, 'register']);
+Route::post('signup', [AuthController::class, 'register']);
 Route::post('login', [AuthController::class, 'login']);
-Route::get('categories', [CategoryController::class, 'getCategories']);
+Route::get('categories', [CategoryController::class, 'getCategories'])->middleware('auth:sanctum');
 Route::get('book-info/{id}', [BookController::class, 'getbook'])->name('api-book-info');
 

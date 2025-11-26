@@ -1,0 +1,6 @@
+@media print{
+    .btn-group, .btn{
+        display: none;
+    }
+
+}

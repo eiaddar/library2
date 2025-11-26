@@ -1,0 +1,6 @@
+
+@media print{
+    #carouselExampleCaptions{
+        display: none;
+    }
+}

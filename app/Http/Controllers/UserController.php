@@ -103,7 +103,7 @@ class UserController extends Controller
         }
         $user->name = $request->name;
         $user->email = $request->email;
-        $user->status = $request->status;
+        $user->is_active = $request->status;
 
         // Only update password if provided
         if (!empty($request->password)) {

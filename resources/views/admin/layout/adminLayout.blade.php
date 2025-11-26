@@ -56,6 +56,7 @@
   <link rel="stylesheet" href="{{ asset('js/lib/apexcharts/apexcharts.css') }}" />
   <!-- jsvectormap -->
   <link rel="stylesheet" href="{{ asset('js/lib/jsvectormap/jsvectormap.min.css') }}" />
+  <link rel="stylesheet" href="{{ asset("/css/adminlte-print.css") }}" />
 </head>
 <!--end::Head-->
 <!--begin::Body-->
@@ -262,7 +263,7 @@
     <!--begin::Sidebar-->
     <aside class="shadow app-sidebar bg-body-secondary" data-bs-theme="dark">
       <!--begin::Sidebar Brand-->
-      <div class="sidebar-brand"> 
+      <div class="sidebar-brand">
         <!--begin::Brand Link-->
         <a href="./dashboard" class="brand-link">
           <!--begin::Brand Image-->
