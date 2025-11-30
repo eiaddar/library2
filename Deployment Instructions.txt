@@ -1,0 +1,23 @@
+Deployment:
+===========
+requirements:
+*Server 								✓
+*Public IP linked to as server 						✓
+*DNS Record 								✓
+
+Server Requirements:
+OS: Linux | Windows Updated 						✓
+Dependencies:
+- Apache2 |nginx web server 						✓
+- PHP (relevant version)    						✓
+- PHP extensions	    						✓
+- Nodejs	            						✓
+- install DB & User Privileges 						✓
+- clone or upload project:
+	1- install git, composer, my project 				✓
+	2- set right owner and permissions to the project		✓
+	3- setup virtual host						✓						
+	4- setup certificate						✓
+
+
+ 
