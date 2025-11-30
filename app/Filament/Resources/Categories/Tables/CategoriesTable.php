@@ -40,7 +40,7 @@ class CategoriesTable
                     ->dateTime()
                     ->sortable()
                     ->toggleable(isToggledHiddenByDefault: true),
-                ImageColumn::make('image_url')->Disk('public'),
+                ImageColumn::make('image_url')->disk('public'),
             ])
             ->filters([
                 //

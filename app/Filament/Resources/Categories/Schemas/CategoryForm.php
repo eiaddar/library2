@@ -21,6 +21,7 @@ class CategoryForm
                 Toggle::make('is_active')
                     ->required(),
                 FileUpload::make('image_url')
+                    ->disk('public')
                     ->image(),
             ]);
     }
