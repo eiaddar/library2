@@ -26,6 +26,7 @@ class AdminPanelProvider extends PanelProvider
         return $panel
             ->default()
             ->spa()
+            ->profile()
             ->id('admin')
             ->path('webmaster')
             ->login()
